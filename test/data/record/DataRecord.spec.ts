@@ -1,5 +1,5 @@
-import DataRecord from '../../src/data/DataRecord';
-import DataRecordDescriptor from '../../src/data/DataRecordDescriptor';
+import DataRecord from '../../../src/data/record/DataRecord';
+import DataRecordDescriptor from '../../../src/data/record/DataRecordDescriptor';
 
 describe("DataRecord tests", () => {
 
@@ -238,5 +238,69 @@ describe("DataRecord tests", () => {
             field3: new Date(2002, 4, 25),
             field4: true
         });
+    });
+
+    it("should convert the values if necessary", () => {
+
+        const recordDescriptor = new DataRecordDescriptor();
+
+        recordDescriptor.fromModel({
+            field1: {
+                id: true,
+                type: String,
+                value: 'field1',
+                validators: [
+                    {
+                        type: 'required'
+                    }
+                ]
+            },
+            field2: {
+                type: Number,
+                value: 3,
+                validators: [
+                    {
+                        type: 'required'
+                    }
+                ]
+            },
+            field3: {
+                type: Date,
+                value: new Date(2002, 4, 25),
+                validators: [
+                    {
+                        type: 'required'
+                    }
+                ]
+            },
+            field4: {
+                type: Boolean,
+                value: true,
+                validators: [
+                    {
+                        type: 'required'
+                    }
+                ]
+            }
+        });
+
+        const dataRecord = new DataRecord(recordDescriptor);
+
+        // Simulate an API web response with fields being returned with string values
+        const response = JSON.parse('{"field1":"field1","field2":"3","field3":"2002-05-25T04:00:00.000Z","field4":"true"}');
+
+        dataRecord.initialize(response);
+
+        // Verify that when initialized is not modified
+        expect(dataRecord.isModified).toEqual(false);
+
+        // Verify it returns the initial data
+        expect(dataRecord.getData()).toEqual({
+            field1: "field1",
+            field2: 3,
+            field3: new Date(2002, 4, 25),
+            field4: true
+        });
+
     });
 });

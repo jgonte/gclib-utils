@@ -1,5 +1,17 @@
-import { Observer, Subscriber } from "../gclib-utils";
 import { DataFieldDescriptor } from "./Interfaces";
+import Observer from "../../observer/Observer";
+import Subscriber from "../../observer/Subscriber";
+
+function toTypeOf(typeFunction: Function) {
+
+    switch (typeFunction) {
+        case String: return 'string';
+        case Boolean: return 'boolean';
+        case Number: return 'number';
+        case BigInt: return 'bigint';
+        default: return 'object';
+    }
+}
 
 /**
  * The field that is stored in a record of a store
@@ -26,14 +38,14 @@ export default class DataField {
     private _observer: Observer = new Observer('onValueSet');
 
     constructor(fieldDescriptor: DataFieldDescriptor, subscriber: Subscriber) {
-        
+
         this._fieldDescriptor = fieldDescriptor;
 
         if (fieldDescriptor.value !== undefined) {
 
             this.initialize(fieldDescriptor.value);
         }
-        
+
         this._observer.subscribe(subscriber);
     }
 
@@ -49,6 +61,12 @@ export default class DataField {
 
     initialize(value: any) {
 
+        // Convert the value if its type is different from the expected type of the field descriptor
+        if (typeof value !== toTypeOf(this._fieldDescriptor.type)) {
+
+            value = this._fieldDescriptor.converter.fromString(value, this._fieldDescriptor.type);
+        }
+
         this._value = value;
 
         this._initialValue = value;
@@ -58,13 +76,19 @@ export default class DataField {
 
         const oldValue = this._value;
 
+        // Convert the value if its type is different from the expected type of the field descriptor
+        if (typeof value !== toTypeOf(this._fieldDescriptor.type)) {
+
+            value = this._fieldDescriptor.converter.fromString(value, this._fieldDescriptor.type);
+        }
+
         this._value = value;
 
         this._observer.notify(this._fieldDescriptor, this._value, oldValue, this._initialValue);
     }
 
     get value() {
-        
+
         return this._value;
     }
 

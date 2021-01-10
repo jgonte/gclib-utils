@@ -1,5 +1,5 @@
-import DataRecordDescriptor from '../../src/data/DataRecordDescriptor';
-import DataRecordSet from '../../src/data/DataRecordSet';
+import DataRecordDescriptor from '../../../src/data/record/DataRecordDescriptor';
+import DataRecordSet from '../../../src/data/record/DataRecordSet';
 
 const recordDescriptorWithId = new DataRecordDescriptor();
 

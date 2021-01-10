@@ -1,6 +1,7 @@
-import { Subscriber } from "../gclib-utils";
+import Subscriber from "../../observer/Subscriber";
 import DataField from "./DataField";
 import { DataFieldDescriptor, IdentifierInfo } from "./Interfaces";
+import defaultValueConverter from "../converter/defaultValueConverter";
 
 function getType(value: any): Function {
 
@@ -60,6 +61,7 @@ export default class DataRecordDescriptor {
                     id: f.id || false,
                     type: f.type || String, // Default to string
                     value: f.value || undefined,
+                    converter: f.converter || defaultValueConverter,
                     validators: f.validators || []
                 };
 
@@ -75,6 +77,7 @@ export default class DataRecordDescriptor {
             name: key,
             type: getType(value),
             value,
+            converter: defaultValueConverter,
             validators: []
         };
 

@@ -1,8 +1,8 @@
-import { Subscriber } from "../gclib-utils";
+import Subscriber from "../../observer/Subscriber";
 import DataField from "./DataField";
 import DataRecordDescriptor from "./DataRecordDescriptor";
 import { DataFieldDescriptor, DataProvider, DataSetter } from "./Interfaces";
-import areEqual from "../utils/areEqual";
+import areEqual from "../../utils/areEqual";
 
 /**
  * Keeps information about a sigle set of fields

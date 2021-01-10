@@ -1,4 +1,4 @@
-import DataRecordDescriptor from '../../src/data/DataRecordDescriptor';
+import DataRecordDescriptor from '../../../src/data/record/DataRecordDescriptor';
 
 describe("DataRecordDescriptor tests", () => {
 

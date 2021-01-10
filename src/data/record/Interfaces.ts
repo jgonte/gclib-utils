@@ -21,6 +21,11 @@ export interface DataFieldDescriptor {
     value: any;
 
     /**
+     * The converter to convert the value if the value comes as a string
+     */
+    converter: any;
+
+    /**
      * The validators of the field
      */
     validators: any[];

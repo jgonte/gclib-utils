@@ -1,4 +1,4 @@
-import Class, { ShadowOptions } from '../../src/class-builder/Class';
+import Class from '../../src/class-builder/Class';
 
 describe("Class tests", () => {
 

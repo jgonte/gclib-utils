@@ -27,11 +27,13 @@ export default class Observer {
     }
   }
 
-  notify() {
+  notify(...args: any[]) {
+
+    args.push(this); // Append the observer to the list of arguments to make it accessable to the subscriber
 
     for (let subscriber of this._subscribers) {
 
-      (subscriber as any)[this.callbackName](this);
+      (subscriber as any)[this.callbackName](...args);
     }
   }
 }

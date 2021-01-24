@@ -15,7 +15,7 @@ export default class DataRecordSet implements DataProvider {
 
     private _removedRecords: Record<string, DataRecord> = {};
 
-    private _recordDescriptor?: DataRecordDescriptor;
+    private _recordDescriptor: DataRecordDescriptor;
 
     /**
      * The cached data of the record set

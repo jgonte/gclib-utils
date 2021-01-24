@@ -1,9 +1,11 @@
 import Observer from './observer/Observer';
 import Subscriber from './observer/Subscriber';
-import Class from './class-builder/Class';
+import IntlProvider from './intl/IntlProvider';
+import appCtrl from './app/appCtrl';
 
 export {
     Observer,
     Subscriber,
-    Class
+    IntlProvider,
+    appCtrl
 }

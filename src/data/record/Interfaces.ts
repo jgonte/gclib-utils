@@ -1,14 +1,11 @@
-export interface DataFieldDescriptor {
+import DataField from "./DataField";
+
+export interface DataFieldModel {
 
     /**
      * Whether the field is an identifier of the record
      */
-    id: boolean;
-
-    /**
-     * The name of the field
-     */
-    name: string;
+    id?: boolean;
 
     /**
      * The type of the field
@@ -18,17 +15,25 @@ export interface DataFieldDescriptor {
     /**
      * The default value of the field
      */
-    value: any;
+    value?: any;
 
     /**
      * The converter to convert the value if the value comes as a string
      */
-    converter: any;
+    converter?: any;
 
     /**
      * The validators of the field
      */
-    validators: any[];
+    validators?: any[];
+}
+
+export interface DataFieldDescriptor extends DataFieldModel {
+
+    /**
+     * The name of the field
+     */
+    name: string;
 }
 
 export interface IdentifierInfo {
@@ -49,12 +54,19 @@ export interface IdentifierInfo {
     hasUndefinedIdentifiers: boolean;
 }
 
+export interface IDataField {
+
+    readonly name: string;
+
+    readonly value: any;
+}
+
 export interface DataProvider {
 
-    getData() : any;
+    getData(): any;
 }
 
 export interface DataSetter {
 
-    setData(data: any) : void;
+    setData(data: any): void;
 }

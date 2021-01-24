@@ -1,6 +1,8 @@
-import { DataFieldDescriptor } from "./Interfaces";
+import { DataFieldDescriptor, IDataField } from "./Interfaces";
 import Observer from "../../observer/Observer";
 import Subscriber from "../../observer/Subscriber";
+import { ValidationContext } from "../validation/Interfaces";
+import FieldValidator from "../validation/validators/field/FieldValidator";
 
 function toTypeOf(typeFunction: Function) {
 
@@ -16,7 +18,7 @@ function toTypeOf(typeFunction: Function) {
 /**
  * The field that is stored in a record of a store
  */
-export default class DataField {
+export default class DataField implements IDataField {
 
     /**
      * The name of the field
@@ -33,6 +35,9 @@ export default class DataField {
      * A field is considered "modified" if its current value is different from the "initial" one
      */
     private _initialValue?: any;
+
+    /** The validators of the field */
+    private _validators?: FieldValidator[];
 
     /** The observer to notify when the value of the field changed */
     private _observer: Observer = new Observer('onValueSet');
@@ -62,7 +67,9 @@ export default class DataField {
     initialize(value: any) {
 
         // Convert the value if its type is different from the expected type of the field descriptor
-        if (typeof value !== toTypeOf(this._fieldDescriptor.type)) {
+        if (value !== undefined &&
+            value != null &&
+            typeof value !== toTypeOf(this._fieldDescriptor.type)) {
 
             value = this._fieldDescriptor.converter.fromString(value, this._fieldDescriptor.type);
         }
@@ -77,7 +84,9 @@ export default class DataField {
         const oldValue = this._value;
 
         // Convert the value if its type is different from the expected type of the field descriptor
-        if (typeof value !== toTypeOf(this._fieldDescriptor.type)) {
+        if (value !== undefined &&
+            value != null && 
+            typeof value !== toTypeOf(this._fieldDescriptor.type)) {
 
             value = this._fieldDescriptor.converter.fromString(value, this._fieldDescriptor.type);
         }
@@ -95,5 +104,43 @@ export default class DataField {
     reset() {
 
         this.value = this._initialValue;
+    }
+
+    validate(context: ValidationContext) : boolean {
+
+        const {
+            validators
+        } = this._fieldDescriptor;
+
+        if (validators === undefined) {
+
+            return true;
+        }
+
+        let valid = true;
+
+        const length = validators.length; 
+
+        for (let i = 0; i < length; ++i) {
+
+            const validator = validators[i];
+            
+            const r = validator.validate(this, context);
+
+            if (r === false) {
+
+                if (valid === true) {
+
+                    valid = false; // Set it once to invalid
+                }
+
+                if (context.stopWhenInvalid === true) {
+
+                    break;
+                }
+            }
+        }
+
+        return valid;
     }
 }

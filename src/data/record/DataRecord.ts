@@ -1,19 +1,21 @@
 import Subscriber from "../../observer/Subscriber";
 import DataField from "./DataField";
 import DataRecordDescriptor from "./DataRecordDescriptor";
-import { DataFieldDescriptor, DataProvider, DataSetter } from "./Interfaces";
+import { DataFieldDescriptor, DataProvider, DataSetter, IdentifierInfo } from "./Interfaces";
 import areEqual from "../../utils/areEqual";
+import { ValidationContext } from "../validation/Interfaces";
+import { ENGINE_METHOD_DIGESTS } from "constants";
 
 /**
  * Keeps information about a sigle set of fields
  */
 export default class DataRecord implements DataProvider, DataSetter, Subscriber {
-    
+
     private _fields: Record<string, DataField> = {};
 
     private _modifiedFields: Record<string, DataField> = {};
 
-    private _recordDescriptor?: DataRecordDescriptor;
+    private _recordDescriptor: DataRecordDescriptor;
 
     /**
      * The cached id of the record
@@ -25,14 +27,23 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
      */
     private _data?: any = undefined;
 
-    constructor(recordDescriptor?: DataRecordDescriptor) {
+    constructor(recordDescriptor: DataRecordDescriptor) {
+
+        if (recordDescriptor === undefined ||
+            recordDescriptor === null ||
+            recordDescriptor.fieldDescriptors.length === 0) {
+
+            throw Error('Undefined or invalid record descriptor for a data record');
+        }
 
         this._recordDescriptor = recordDescriptor;
+
+        this._recordDescriptor.createFields(this._fields, this);
     }
 
     /**
-     * Initializes the data record with the data passed in
-     * If the field descriptors are undefined, it creates them
+     * Initializes the data record with the data passed in that matches the field descriptors
+     * If the property of the data is not described in the field descriptor, it will be ignored
      * @param data The data to initialize the data record with
      */
     initialize(data: any) {
@@ -41,27 +52,19 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
             _fields
         } = this;
 
-        this._recordDescriptor = this._recordDescriptor || new DataRecordDescriptor();
-
         for (const key in data) {
 
             if (data.hasOwnProperty(key)) {
 
-                if (!_fields.hasOwnProperty(key)) { // The field does not exist, create it
+                if (_fields.hasOwnProperty(key)) { // The field exists, create it
 
-                    const value = data[key];
+                    _fields[key].initialize(data[key]);
+                }
+                else {
 
-                    let fieldDescriptor = this._recordDescriptor.getFieldDescriptor(key);
-
-                    if (fieldDescriptor === undefined) {
-
-                        fieldDescriptor = this._recordDescriptor.addFieldDescriptor(key, data[key]);
-                    }
-
-                    _fields[key] = new DataField(fieldDescriptor, this);
+                    console.warn(`There is no field for property: '${key}' that was passed as data`);
                 }
 
-                _fields[key].initialize(data[key]);
             }
         }
 
@@ -82,11 +85,6 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
         if (_data !== undefined) {
 
             return _data;
-        }
-
-        if (Object.keys(_fields).length === 0) { // Need to create the record
-
-            this._recordDescriptor!.createFields(_fields, this);
         }
 
         const data: any = {};
@@ -117,7 +115,7 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
 
         if (this._id === undefined) {
 
-            const idInfo = this._recordDescriptor!.getId(_fields, (f: { value: any; }) => f.value);
+            const idInfo = this._recordDescriptor.getId(_fields, (f: { value: any; }) => f.value);
 
             this._id = idInfo.value;
         }
@@ -158,7 +156,7 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
 
             if (_fields.hasOwnProperty(key)) {
 
-                _fields[key].reset();            
+                _fields[key].reset();
             }
         }
 
@@ -206,5 +204,42 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
         callback(this._data);
 
         this.initialize(this._data);
+    }
+
+    validate(context: ValidationContext): boolean {
+
+        const {
+            _fields,
+            _recordDescriptor
+        } = this;
+
+        let valid = true;
+
+        // Validate the fields
+        Object.values(_fields).forEach(f => {
+
+            const r = f.validate(context);
+
+            if (r === false && valid === true) {
+
+                valid = false;
+            }
+        });
+
+        const {
+            recordValidators
+        } = _recordDescriptor;
+
+        recordValidators?.forEach(v => {
+
+            const r = v.validate(this, context);
+
+            if (r === false && valid === true) {
+
+                valid = false;
+            }
+        });
+
+        return valid;
     }
 }

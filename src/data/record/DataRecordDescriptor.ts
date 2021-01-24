@@ -1,7 +1,8 @@
 import Subscriber from "../../observer/Subscriber";
 import DataField from "./DataField";
-import { DataFieldDescriptor, IdentifierInfo } from "./Interfaces";
+import { DataFieldModel, DataFieldDescriptor, IdentifierInfo } from "./Interfaces";
 import defaultValueConverter from "../converter/defaultValueConverter";
+import RecordValidator from "../validation/validators/record/RecordValidator";
 
 function getType(value: any): Function {
 
@@ -35,6 +36,18 @@ export default class DataRecordDescriptor {
      */
     private _fieldDescriptors: DataFieldDescriptor[] = [];
 
+    private _recordValidators?: RecordValidator[];
+
+    get fieldDescriptors() {
+
+        return this._fieldDescriptors;
+    }
+
+    get recordValidators() {
+
+        return this._recordValidators;
+    }
+
     getFieldDescriptor(name: string): DataFieldDescriptor | undefined {
 
         const descriptors = this._fieldDescriptors.filter(d => d.name === name);
@@ -48,13 +61,13 @@ export default class DataRecordDescriptor {
      * Creates the record descriptor from a model
      * @param model 
      */
-    fromModel(model: any): void {
+    fromModel(model: Record<string, DataFieldModel>, ...recordValidators: RecordValidator[]): void {
 
         for (const key in model) {
 
             if (model.hasOwnProperty(key)) {
 
-                const f: any = model[key];
+                const f: DataFieldModel = model[key];
 
                 const fieldDescriptor: DataFieldDescriptor = {
                     name: key,
@@ -68,6 +81,8 @@ export default class DataRecordDescriptor {
                 this._fieldDescriptors.push(fieldDescriptor);
             }
         }
+
+        this._recordValidators = recordValidators;
     }
 
     addFieldDescriptor(key: string, value: any): DataFieldDescriptor {

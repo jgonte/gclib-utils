@@ -4,9 +4,9 @@ const defaultValueConverter = {
 
         switch (type) {
             case Boolean:
-                return value !== null && value !== 'false';
+                return value !== 'false';
             case Number:
-                return value === null ? null : Number(value);
+                return Number(value);
             case Date:
                 return new Date(value);
             case Object:

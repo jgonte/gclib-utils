@@ -1,6 +1,6 @@
 {
   "name": "gclib-utils",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "General utilities javascript library",
   "keywords": [],
   "main": "dist/gclib-utils.umd.js",
@@ -49,7 +49,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",

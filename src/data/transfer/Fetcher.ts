@@ -188,11 +188,13 @@ export default abstract class Fetcher implements FetchCallbacks {
      */
     async parseContent(response: Response) {
 
-        const contentType: string | null = response.headers.get('content-type');
+        let contentType: string | null = response.headers.get('content-type');
 
         const content = await response.text();
 
         if (contentType !== null) {
+
+            contentType = contentType.split(';')[0].trim();
 
             switch (contentType) {
                 case 'application/json': return JSON.parse(content);

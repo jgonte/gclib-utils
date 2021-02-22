@@ -25,7 +25,7 @@ describe("SingleItemLoader test", () => {
 				name: 'Sarah'
 			}),
 			{
-				headers: { "content-type": "application/json" }
+				headers: { "content-type": "application/json; charset=utf-8" }
 			});
 
 		const request = {

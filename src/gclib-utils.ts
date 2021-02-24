@@ -8,6 +8,7 @@ import DataRecordSet from './data/record/DataRecordSet';
 import Fetcher from './data/transfer/Fetcher';
 import SingleItemLoader from './data/transfer/loaders/SingleItemLoader';
 import CollectionLoader from './data/transfer/loaders/CollectionLoader';
+import formatDate from './utils/formatDate';
 
 export {
     Observer,
@@ -19,5 +20,6 @@ export {
     DataRecordSet,
     Fetcher,
     SingleItemLoader,
-    CollectionLoader
+    CollectionLoader,
+    formatDate
 }

@@ -2,7 +2,7 @@ import deserializeXmlDocument from "../../utils/deserializeXmlDocument";
 import template from "../../utils/template";
 import { ErrorResponse, FetchCallbacks, FetchRequest } from "./Interfaces";
 
-export default abstract class Fetcher implements FetchCallbacks {
+export default class Fetcher implements FetchCallbacks {
 
     onResponse?: (response: Response) => void;
 

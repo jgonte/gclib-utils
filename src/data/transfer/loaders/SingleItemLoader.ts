@@ -8,7 +8,7 @@ export default class SingleItemLoader extends Fetcher {
 
     constructor(cfg: SingleItemLoaderConfig) {
 
-        super(cfg.onResponse, cfg.onError, cfg.onData);
+        super(cfg);
 
         this.urlBuilder = new SelectUrlBuilder(cfg.urlBuilder);
     }

@@ -8,7 +8,7 @@ export default class CollectionLoader extends Fetcher {
 
     constructor(cfg: CollectionLoaderConfig) {
 
-        super(cfg.onResponse, cfg.onError, cfg.onData);
+        super(cfg);
 
         this.urlBuilder = new CollectionUrlBuilder(cfg.urlBuilder);
     }

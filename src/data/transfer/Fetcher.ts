@@ -10,14 +10,13 @@ export default class Fetcher implements FetchCallbacks {
 
     onData?: (data: Record<string, any>) => void;
 
-    constructor(
+    constructor(callbacks: FetchCallbacks) {
 
-        onResponse?: (response: Response) => void,
-
-        onError?: (error: ErrorResponse) => void,
-
-        onData?: (data: Record<string, any>) => void
-    ) {
+        const {
+            onResponse,
+            onError,
+            onData
+        } = callbacks;
 
         if (onResponse !== undefined) {
 
@@ -34,6 +33,7 @@ export default class Fetcher implements FetchCallbacks {
             this.onData = onData.bind(this);
         }
     }
+    
     async fetch(request: FetchRequest) {
 
         const {

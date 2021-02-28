@@ -12,7 +12,7 @@ describe("DataRecord tests", () => {
 
         recordDescriptor.fromModel({
             field1: {
-                id: true,
+                isId: true,
                 type: String,
                 value: 'field1',
                 validators: [
@@ -110,7 +110,7 @@ describe("DataRecord tests", () => {
 
         recordDescriptor.fromModel({
             field1: {
-                id: true,
+                isId: true,
                 type: String,
                 value: 'field1',
                 validators: [
@@ -212,7 +212,7 @@ describe("DataRecord tests", () => {
 
         recordDescriptor.fromModel({
             field1: {
-                id: true,
+                isId: true,
                 type: String,
                 value: 'field1',
                 validators: [
@@ -276,7 +276,7 @@ describe("DataRecord tests", () => {
 
         recordDescriptor.fromModel({
             field1: {
-                id: true,
+                isId: true,
                 type: String,
                 //value: 'field1',
                 validators: [

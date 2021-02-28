@@ -67,38 +67,32 @@ export default class DataRecordDescriptor {
 
             if (model.hasOwnProperty(key)) {
 
-                const f: DataFieldModel = model[key];
+                const {
+                    isId,
+                    type,
+                    value,
+                    converter,
+                    validators
+                } = model[key];
 
-                const fieldDescriptor: DataFieldDescriptor = {
+                this.addFieldDescriptor({
                     name: key,
-                    id: f.id || false,
-                    type: f.type || String, // Default to string
-                    value: f.value || undefined,
-                    converter: f.converter || defaultValueConverter,
-                    validators: f.validators || []
-                };
-
-                this._fieldDescriptors.push(fieldDescriptor);
+                    isId: isId ?? false,
+                    type: type !== undefined ? type : value !== undefined ?
+                        getType(value) : String,
+                    value,
+                    converter: converter || defaultValueConverter,
+                    validators: validators || []
+                });
             }
         }
 
         this._recordValidators = recordValidators;
     }
 
-    addFieldDescriptor(key: string, value: any): DataFieldDescriptor {
-
-        const fieldDescriptor = {
-            id: false,
-            name: key,
-            type: getType(value),
-            value,
-            converter: defaultValueConverter,
-            validators: []
-        };
+    addFieldDescriptor(fieldDescriptor: DataFieldDescriptor): void {
 
         this._fieldDescriptors.push(fieldDescriptor);
-
-        return fieldDescriptor;
     }
 
     /**
@@ -109,6 +103,7 @@ export default class DataRecordDescriptor {
     createFields(fields: any, subscriber: Subscriber) {
 
         this._fieldDescriptors.forEach(fieldDescriptor =>
+
             fields[fieldDescriptor.name] = new DataField(fieldDescriptor, subscriber)
         );
     }
@@ -118,11 +113,11 @@ export default class DataRecordDescriptor {
      * @param data 
      * @param fcn A function to process the data further if necessary
      */
-    getId(data: any, fcn?: Function) : IdentifierInfo {
+    getId(data: any, fcn?: Function): IdentifierInfo {
 
         const id: Record<string, any> = {};
 
-        const idDescriptors = this._fieldDescriptors.filter(f => f.id === true);
+        const idDescriptors = this._fieldDescriptors.filter(f => f.isId === true);
 
         const { length } = idDescriptors;
 

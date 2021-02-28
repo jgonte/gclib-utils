@@ -5,7 +5,7 @@ export interface DataFieldModel {
     /**
      * Whether the field is an identifier of the record
      */
-    id?: boolean;
+    isId?: boolean;
 
     /**
      * The type of the field

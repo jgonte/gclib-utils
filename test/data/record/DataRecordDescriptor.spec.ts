@@ -8,7 +8,7 @@ describe("DataRecordDescriptor tests", () => {
 
         recordDescriptor.fromModel({
             id: {
-                id: true,
+                isId: true,
                 type: Number
             },
             iq: {
@@ -46,11 +46,11 @@ describe("DataRecordDescriptor tests", () => {
 
         recordDescriptor.fromModel({
             id: {
-                id: true,
+                isId: true,
                 type: Number
             },
             ssn: {
-                id: true,
+                isId: true,
                 type: String
             },
             iq: {
@@ -131,7 +131,7 @@ describe("DataRecordDescriptor tests", () => {
 
         recordDescriptor.fromModel({
             id: {
-                id: true,
+                isId: true,
                 type: Number
             },
             iq: {
@@ -174,11 +174,11 @@ describe("DataRecordDescriptor tests", () => {
 
         recordDescriptor.fromModel({
             id: {
-                id: true,
+                isId: true,
                 type: Number
             },
             ssn: {
-                id: true,
+                isId: true,
                 type: String
             },
             iq: {

@@ -4,7 +4,6 @@ import DataRecordDescriptor from "./DataRecordDescriptor";
 import { DataFieldDescriptor, DataProvider, DataSetter, IdentifierInfo } from "./Interfaces";
 import areEqual from "../../utils/areEqual";
 import { ValidationContext } from "../validation/Interfaces";
-import { ENGINE_METHOD_DIGESTS } from "constants";
 
 /**
  * Keeps information about a sigle set of fields

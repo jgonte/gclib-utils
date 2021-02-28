@@ -5,7 +5,7 @@ const recordDescriptorWithId = new DataRecordDescriptor();
 
 recordDescriptorWithId.fromModel({
     id: {
-        id: true,
+        isId: true,
         type: Number
     },
     iq: {

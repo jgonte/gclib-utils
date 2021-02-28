@@ -61,7 +61,7 @@ export default class DataField implements IDataField {
 
     get isId() {
 
-        return this._fieldDescriptor.id;
+        return this._fieldDescriptor.isId;
     }
 
     initialize(value: any) {

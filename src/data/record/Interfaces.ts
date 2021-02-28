@@ -1,3 +1,5 @@
+import ValueConverter from "../converter/Interfaces";
+import Validator from "../validation/validators/Validator";
 import DataField from "./DataField";
 
 export interface DataFieldModel {
@@ -20,12 +22,12 @@ export interface DataFieldModel {
     /**
      * The converter to convert the value if the value comes as a string
      */
-    converter?: any;
+    converter?: ValueConverter;
 
     /**
      * The validators of the field
      */
-    validators?: any[];
+    validators?: Validator[];
 }
 
 export interface DataFieldDescriptor extends DataFieldModel {

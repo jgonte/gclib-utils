@@ -1,4 +1,6 @@
 import template from "../../../utils/template";
+import DataRecord from "../../record/DataRecord";
+import { IDataField } from "../../record/Interfaces";
 import { ValidationContext } from "../Interfaces";
 
 export interface ValidatorOptions {
@@ -15,6 +17,8 @@ export default abstract class Validator {
 
         this.message = options?.message;
     }
+
+    abstract validate(fieldOrRecord: IDataField | DataRecord, context: ValidationContext): boolean;
 
     emitMessage(context: ValidationContext, data: any) {
 

@@ -55,7 +55,7 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
 
             if (data.hasOwnProperty(key)) {
 
-                if (_fields.hasOwnProperty(key)) { // The field exists, create it
+                if (_fields.hasOwnProperty(key)) { // The field exists, initialize it
 
                     _fields[key].initialize(data[key]);
                 }
@@ -72,6 +72,11 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
         this._data = undefined;
 
         this._modifiedFields = {};
+    }
+
+    getField(name: string) {
+
+        return this._fields[name];
     }
 
     getData(): any {

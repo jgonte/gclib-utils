@@ -1,6 +1,8 @@
-const defaultValueConverter = {
+import ValueConverter from "./Interfaces";
 
-    fromString: (value: any, type: Function) => {
+const defaultValueConverter: ValueConverter = {
+
+    fromString: (value: string, type: Function) => {
 
         switch (type) {
             case Boolean:

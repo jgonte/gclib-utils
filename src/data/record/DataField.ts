@@ -71,7 +71,7 @@ export default class DataField implements IDataField {
             value != null &&
             typeof value !== toTypeOf(this._fieldDescriptor.type)) {
 
-            value = this._fieldDescriptor.converter.fromString(value, this._fieldDescriptor.type);
+            value = this._fieldDescriptor.converter!.fromString(value, this._fieldDescriptor.type);
         }
 
         this._value = value;
@@ -85,15 +85,20 @@ export default class DataField implements IDataField {
 
         // Convert the value if its type is different from the expected type of the field descriptor
         if (value !== undefined &&
-            value != null && 
+            value != null &&
             typeof value !== toTypeOf(this._fieldDescriptor.type)) {
 
-            value = this._fieldDescriptor.converter.fromString(value, this._fieldDescriptor.type);
+            value = this._fieldDescriptor.converter!.fromString(value, this._fieldDescriptor.type);
         }
 
         this._value = value;
 
-        this._observer.notify(this._fieldDescriptor, this._value, oldValue, this._initialValue);
+        this._observer.notify(
+            this._fieldDescriptor,
+            this._value,
+            oldValue,
+            this._initialValue
+        );
     }
 
     get value() {
@@ -106,7 +111,7 @@ export default class DataField implements IDataField {
         this.value = this._initialValue;
     }
 
-    validate(context: ValidationContext) : boolean {
+    validate(context: ValidationContext): boolean {
 
         const {
             validators
@@ -119,12 +124,12 @@ export default class DataField implements IDataField {
 
         let valid = true;
 
-        const length = validators.length; 
+        const length = validators.length;
 
         for (let i = 0; i < length; ++i) {
 
             const validator = validators[i];
-            
+
             const r = validator.validate(this, context);
 
             if (r === false) {

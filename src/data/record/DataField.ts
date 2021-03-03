@@ -3,6 +3,8 @@ import Observer from "../../observer/Observer";
 import Subscriber from "../../observer/Subscriber";
 import { ValidationContext } from "../validation/Interfaces";
 import FieldValidator from "../validation/validators/field/FieldValidator";
+import Validator from "../validation/validators/Validator";
+import createValidator from "../validation/createValidator";
 
 function toTypeOf(typeFunction: Function) {
 
@@ -21,7 +23,7 @@ function toTypeOf(typeFunction: Function) {
 export default class DataField implements IDataField {
 
     /**
-     * The name of the field
+     * The descriptor of the field
      */
     private _fieldDescriptor: DataFieldDescriptor;
 
@@ -114,7 +116,8 @@ export default class DataField implements IDataField {
     validate(context: ValidationContext): boolean {
 
         const {
-            validators
+            validators,
+            validationFailedHandler
         } = this._fieldDescriptor;
 
         if (validators === undefined) {
@@ -128,15 +131,22 @@ export default class DataField implements IDataField {
 
         for (let i = 0; i < length; ++i) {
 
-            const validator = validators[i];
+            let validator = validators[i];
 
-            const r = validator.validate(this, context);
+            if (!(validator instanceof Validator)) {
+
+                validator = createValidator(validator);
+            }
+
+            const r = (validator as Validator).validate(this, context);
 
             if (r === false) {
 
                 if (valid === true) {
 
                     valid = false; // Set it once to invalid
+
+                    validationFailedHandler.onValidationFailed(context.errors[context.errors.length - 1]);
                 }
 
                 if (context.stopWhenInvalid === true) {

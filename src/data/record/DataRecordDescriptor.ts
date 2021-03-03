@@ -1,5 +1,3 @@
-import Subscriber from "../../observer/Subscriber";
-import DataField from "./DataField";
 import { DataFieldModel, DataFieldDescriptor, IdentifierInfo } from "./Interfaces";
 import defaultValueConverter from "../converter/defaultValueConverter";
 import RecordValidator from "../validation/validators/record/RecordValidator";
@@ -72,7 +70,8 @@ export default class DataRecordDescriptor {
                     type,
                     value,
                     converter,
-                    validators
+                    validators,
+                    validationFailedHandler: validationFailedHandler
                 } = model[key];
 
                 this.addFieldDescriptor({
@@ -82,7 +81,8 @@ export default class DataRecordDescriptor {
                         getType(value) : String,
                     value,
                     converter: converter || defaultValueConverter,
-                    validators: validators || []
+                    validators: validators || [],
+                    validationFailedHandler: validationFailedHandler
                 });
             }
         }
@@ -90,22 +90,19 @@ export default class DataRecordDescriptor {
         this._recordValidators = recordValidators;
     }
 
-    addFieldDescriptor(fieldDescriptor: DataFieldDescriptor): void {
+    addFieldDescriptor(fd: DataFieldDescriptor): void {
 
-        this._fieldDescriptors.push(fieldDescriptor);
+        this._fieldDescriptors.push(fd);
     }
 
-    /**
-     * Creates the fields from the descriptors
-     * @param fields
-     * @param subscriber 
-     */
-    createFields(fields: any, subscriber: Subscriber) {
+    removeFieldDescriptor(fd: DataFieldDescriptor): void {
 
-        this._fieldDescriptors.forEach(fieldDescriptor =>
+        const index = this._fieldDescriptors.indexOf(fd);
 
-            fields[fieldDescriptor.name] = new DataField(fieldDescriptor, subscriber)
-        );
+        if (index > -1) {
+
+            this._fieldDescriptors.splice(index, 1);
+        }  
     }
 
     /**

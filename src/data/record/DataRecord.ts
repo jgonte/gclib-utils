@@ -26,18 +26,25 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
      */
     private _data?: any = undefined;
 
-    constructor(recordDescriptor: DataRecordDescriptor) {
+    constructor(recordDescriptor?: DataRecordDescriptor) {
 
-        if (recordDescriptor === undefined ||
-            recordDescriptor === null ||
-            recordDescriptor.fieldDescriptors.length === 0) {
+        this._recordDescriptor = recordDescriptor ?? new DataRecordDescriptor();
 
-            throw Error('Undefined or invalid record descriptor for a data record');
-        }
+        this._recordDescriptor.fieldDescriptors.forEach(fd =>this._fields[fd.name] = new DataField(fd, this));
+    }
 
-        this._recordDescriptor = recordDescriptor;
+    addField(fd: DataFieldDescriptor) {
 
-        this._recordDescriptor.createFields(this._fields, this);
+        this._recordDescriptor.addFieldDescriptor(fd);
+        
+        this._fields[fd.name] = new DataField(fd, this);
+    }
+
+    removeField(fd: DataFieldDescriptor) {
+
+        this._recordDescriptor.removeFieldDescriptor(fd);
+        
+        delete this._fields[fd.name];
     }
 
     /**

@@ -1,5 +1,6 @@
 import DataRecord from '../../../src/data/record/DataRecord';
 import DataRecordDescriptor from '../../../src/data/record/DataRecordDescriptor';
+import { ValidationFailedHandler } from '../../../src/data/validation/Interfaces';
 import RequiredValidator from '../../../src/data/validation/validators/field/RequiredValidator';
 import CompareValidator from '../../../src/data/validation/validators/record/CompareValidator';
 import { ComparisonOperators } from '../../../src/utils/operators/ComparisonOperators';
@@ -274,6 +275,16 @@ describe("DataRecord tests", () => {
 
         const recordDescriptor = new DataRecordDescriptor();
 
+        let validationError;
+
+        const validationFailedHandler: ValidationFailedHandler = {
+
+            onValidationFailed(error) {
+
+                validationError = error;
+            }
+        };
+
         recordDescriptor.fromModel({
             field1: {
                 isId: true,
@@ -284,7 +295,8 @@ describe("DataRecord tests", () => {
                         message: 'Field1 is required',
                         //allowEmpty: false Default
                     })
-                ]
+                ],
+                validationFailedHandler: validationFailedHandler
             },
             field2: {
                 type: Number,
@@ -347,6 +359,8 @@ describe("DataRecord tests", () => {
         expect(validationContext.errors.length).toEqual(2);
 
         expect(validationContext.errors[0]).toEqual('Field1 is required');
+
+        expect(validationError).toEqual('Field1 is required');
 
         expect(validationContext.errors[1]).toEqual('Field2 and Field4 must have equal values');
     });

@@ -1,6 +1,4 @@
 import template from "../../../utils/template";
-import DataRecord from "../../record/DataRecord";
-import { IDataField } from "../../record/Interfaces";
 import { ValidationContext } from "../Interfaces";
 
 export interface ValidatorOptions {
@@ -18,12 +16,29 @@ export default abstract class Validator {
         this.message = options?.message;
     }
 
-    abstract validate(fieldOrRecord: IDataField | DataRecord, context: ValidationContext): boolean;
+    abstract validate(context: ValidationContext): boolean;
 
-    emitMessage(context: ValidationContext, data: any) {
+    /**
+     * Adds an error message to the arrays of errors of the context
+     * @param context The context containing the array of errors
+     * @param data The data to replace the template placeholders with
+     */
+    emitErrors(context: ValidationContext, data: any) {
 
         const result = template(this.message!, data);
 
         context.errors.push(result.text!);
+    }
+
+    /**
+     * Adds an warning message to the arrays of warnings of the context
+     * @param context The context containing the array of warnings
+     * @param data The data to replace the template placeholders with
+     */
+    emitWarnings(context: ValidationContext, data: any) {
+
+        const result = template(this.message!, data);
+
+        context.warnings.push(result.text!);
     }
 }

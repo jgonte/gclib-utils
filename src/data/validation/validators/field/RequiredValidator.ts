@@ -1,7 +1,5 @@
-import { IDataField } from "../../../record/Interfaces";
-import { ValidationContext } from "../../Interfaces";
 import { ValidatorOptions } from "../Validator";
-import FieldValidator from "./FieldValidator";
+import SingleValueFieldValidator, { SingleValueFieldValidationContext } from "./SingleValueFieldValidator";
 
 export interface RequiredValidatorOptions extends ValidatorOptions {
 
@@ -9,7 +7,7 @@ export interface RequiredValidatorOptions extends ValidatorOptions {
     allowEmpty?: boolean;
 }
 
-export default class RequiredValidator extends FieldValidator {
+export default class RequiredValidator extends SingleValueFieldValidator {
 
     /** If true, allows '' as a valid value */
     allowEmpty: boolean;
@@ -18,7 +16,7 @@ export default class RequiredValidator extends FieldValidator {
 
         if (options.message === undefined) {
 
-            options.message ='{{name}} is required';
+            options.message ='{{label}} is required';
         }
 
         super(options);
@@ -26,12 +24,12 @@ export default class RequiredValidator extends FieldValidator {
         this.allowEmpty = options.allowEmpty || false;
     }
 
-    validate(field: IDataField, context: ValidationContext): boolean {
+    validate(context: SingleValueFieldValidationContext): boolean {
 
         const {
-            name,
+            label,
             value
-        } = field;
+        } = context;
 
         var valid = !(value === undefined || value === null);
 
@@ -42,7 +40,7 @@ export default class RequiredValidator extends FieldValidator {
 
         if (!valid) {
 
-            this.emitMessage(context, { name });
+            this.emitErrors(context, { label });
         }
 
         return valid;

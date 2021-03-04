@@ -1,8 +1,6 @@
 import { ComparisonOperators } from "../../../../utils/operators/ComparisonOperators";
-import DataRecord from "../../../record/DataRecord";
-import { ValidationContext } from "../../Interfaces";
 import { ValidatorOptions } from "../Validator";
-import RecordValidator from "./RecordValidator";
+import RecordValidator, { RecordValidationContext } from "./RecordValidator";
 
 export interface CompareValidatorOptions extends ValidatorOptions {
 
@@ -41,7 +39,7 @@ export default class CompareValidator extends RecordValidator {
         this._operator = options.operator;
     }
 
-    validate(record: DataRecord, context: ValidationContext): boolean {
+    validate(context: RecordValidationContext): boolean {
 
         const {
             _propertyToValidate,
@@ -49,7 +47,7 @@ export default class CompareValidator extends RecordValidator {
             _operator
         } = this;
 
-        const data = record.getData();
+        const data = this.getData(context);
 
         const valueToValidate = data[_propertyToValidate];
 
@@ -59,7 +57,7 @@ export default class CompareValidator extends RecordValidator {
 
         if (!valid) {
 
-            this.emitMessage(context, {
+            this.emitErrors(context, {
                 propertyToValidate: _propertyToValidate,
                 valueToValidate,
                 propertyToCompare: _propertyToCompare,

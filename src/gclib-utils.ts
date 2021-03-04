@@ -12,7 +12,7 @@ import RequiredValidator from './data/validation/validators/field/RequiredValida
 import RegexValidator from './data/validation/validators/field/RegexValidator';
 import EmailValidator from './data/validation/validators/field/EmailValidator';
 import RangeValidator from './data/validation/validators/field/RangeValidator';
-import CustomFieldValidator from './data/validation/validators/field/CustomFieldValidator';
+import CustomSingleValueFieldValidator from './data/validation/validators/field/CustomSingleValueFieldValidator';
 import CompareValidator from './data/validation/validators/record/CompareValidator';
 import CustomRecordValidator from './data/validation/validators/record/CustomRecordValidator';
 import Fetcher from './data/transfer/Fetcher';
@@ -35,7 +35,7 @@ export {
     RegexValidator,
     EmailValidator,
     RangeValidator,
-    CustomFieldValidator,
+    CustomSingleValueFieldValidator as CustomFieldValidator,
     CompareValidator,
     CustomRecordValidator,
     Fetcher,

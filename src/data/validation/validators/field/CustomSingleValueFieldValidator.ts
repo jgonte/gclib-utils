@@ -1,14 +1,12 @@
-import { IDataField } from "../../../record/Interfaces";
-import { ValidationContext } from "../../Interfaces";
 import { ValidatorOptions } from "../Validator";
-import FieldValidator from "./FieldValidator";
+import SingleValueFieldValidator, { SingleValueFieldValidationContext } from "./SingleValueFieldValidator";
 
 export interface CustomFieldValidatorOptions extends ValidatorOptions {
 
     validateFcn: Function;
 }
 
-export default class CustomFieldValidator extends FieldValidator {
+export default class CustomSingleValueFieldValidator extends SingleValueFieldValidator {
 
     validateFcn: Function;
 
@@ -19,18 +17,18 @@ export default class CustomFieldValidator extends FieldValidator {
         this.validateFcn = options.validateFcn;
     }
 
-    validate(field: IDataField, context: ValidationContext): boolean {
+    validate(context: SingleValueFieldValidationContext): boolean {
 
         const {
-            name,
+            label,
             value
-        } = field;
+        } = context;
 
         var valid = this.validateFcn.call(this, value);
 
         if (!valid) {
 
-            this.emitMessage(context, { name });
+            this.emitErrors(context, { label });
         }
 
         return valid;

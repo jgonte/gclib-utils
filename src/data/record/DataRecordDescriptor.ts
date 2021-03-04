@@ -69,9 +69,7 @@ export default class DataRecordDescriptor {
                     isId,
                     type,
                     value,
-                    converter,
-                    validators,
-                    validationFailedHandler: validationFailedHandler
+                    converter
                 } = model[key];
 
                 this.addFieldDescriptor({
@@ -80,9 +78,7 @@ export default class DataRecordDescriptor {
                     type: type !== undefined ? type : value !== undefined ?
                         getType(value) : String,
                     value,
-                    converter: converter || defaultValueConverter,
-                    validators: validators || [],
-                    validationFailedHandler: validationFailedHandler
+                    converter: converter || defaultValueConverter
                 });
             }
         }

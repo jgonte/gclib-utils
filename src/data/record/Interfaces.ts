@@ -1,6 +1,4 @@
 import ValueConverter from "../converter/Interfaces";
-import { ValidationFailedHandler, ValidatorConfig } from "../validation/Interfaces";
-import Validator from "../validation/validators/Validator";
 
 export interface DataFieldModel {
 
@@ -24,15 +22,15 @@ export interface DataFieldModel {
      */
     converter?: ValueConverter;
 
-    /**
-     * The validators of the field
-     */
-    validators?: (Validator | ValidatorConfig)[];
+    // /**
+    //  * The validators of the field
+    //  */
+    // validators?: (Validator | ValidatorConfig)[];
 
-    /**
-     * The validation failed handler (which is generally the field component)
-     */
-    validationFailedHandler: ValidationFailedHandler;
+    // /**
+    //  * The validation failed handler (which is generally the field component)
+    //  */
+    // validationFailedHandler: ValidationFailedHandler;
 }
 
 export interface DataFieldDescriptor extends DataFieldModel {

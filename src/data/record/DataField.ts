@@ -2,7 +2,7 @@ import { DataFieldDescriptor, IDataField } from "./Interfaces";
 import Observer from "../../observer/Observer";
 import Subscriber from "../../observer/Subscriber";
 import { ValidationContext } from "../validation/Interfaces";
-import FieldValidator from "../validation/validators/field/FieldValidator";
+import SingleValueFieldValidator from "../validation/validators/field/SingleValueFieldValidator";
 import Validator from "../validation/validators/Validator";
 import createValidator from "../validation/createValidator";
 
@@ -37,9 +37,6 @@ export default class DataField implements IDataField {
      * A field is considered "modified" if its current value is different from the "initial" one
      */
     private _initialValue?: any;
-
-    /** The validators of the field */
-    private _validators?: FieldValidator[];
 
     /** The observer to notify when the value of the field changed */
     private _observer: Observer = new Observer('onValueSet');
@@ -113,49 +110,4 @@ export default class DataField implements IDataField {
         this.value = this._initialValue;
     }
 
-    validate(context: ValidationContext): boolean {
-
-        const {
-            validators,
-            validationFailedHandler
-        } = this._fieldDescriptor;
-
-        if (validators === undefined) {
-
-            return true;
-        }
-
-        let valid = true;
-
-        const length = validators.length;
-
-        for (let i = 0; i < length; ++i) {
-
-            let validator = validators[i];
-
-            if (!(validator instanceof Validator)) {
-
-                validator = createValidator(validator);
-            }
-
-            const r = (validator as Validator).validate(this, context);
-
-            if (r === false) {
-
-                if (valid === true) {
-
-                    valid = false; // Set it once to invalid
-
-                    validationFailedHandler.onValidationFailed(context.errors[context.errors.length - 1]);
-                }
-
-                if (context.stopWhenInvalid === true) {
-
-                    break;
-                }
-            }
-        }
-
-        return valid;
-    }
 }

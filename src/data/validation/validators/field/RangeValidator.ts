@@ -1,7 +1,5 @@
-import { IDataField } from "../../../record/Interfaces";
-import { ValidationContext } from "../../Interfaces";
 import { ValidatorOptions } from "../Validator";
-import FieldValidator from "./FieldValidator";
+import SingleValueFieldValidator, { SingleValueFieldValidationContext } from "./SingleValueFieldValidator";
 
 export interface RangeValidatorOptions extends ValidatorOptions {
 
@@ -10,7 +8,7 @@ export interface RangeValidatorOptions extends ValidatorOptions {
     maxValue?: any;
 }
 
-export default class RangeValidator extends FieldValidator {
+export default class RangeValidator extends SingleValueFieldValidator {
 
     minValue: any;
 
@@ -20,7 +18,7 @@ export default class RangeValidator extends FieldValidator {
 
         if (options.message === undefined) {
 
-            options.message ='{{name}} is not in range from :{{minValue}} to {{maxValue}}';
+            options.message ='{{label}} is not in range from :{{minValue}} to {{maxValue}}';
         }
 
         super(options);
@@ -30,12 +28,12 @@ export default class RangeValidator extends FieldValidator {
         this.maxValue = options.maxValue;
     }
 
-    validate(field: IDataField, context: ValidationContext): boolean {
+    validate(context: SingleValueFieldValidationContext): boolean {
 
         const {
-            name,
+            label,
             value
-        } = field;
+        } = context;
 
         const {
             minValue,
@@ -46,7 +44,7 @@ export default class RangeValidator extends FieldValidator {
 
         if (!valid) {
 
-            this.emitMessage(context, { name });
+            this.emitErrors(context, { label });
         }
 
         return valid;

@@ -1,7 +1,5 @@
-import DataRecord from "../../../record/DataRecord";
-import { ValidationContext } from "../../Interfaces";
 import { ValidatorOptions } from "../Validator";
-import RecordValidator from "./RecordValidator";
+import RecordValidator, { RecordValidationContext } from "./RecordValidator";
 
 export interface CustomRecordValidatorOptions extends ValidatorOptions {
 
@@ -19,19 +17,18 @@ export default class CustomRecordValidator extends RecordValidator {
         this.validateFcn = options.validateFcn;
     }
 
-    validate(record: DataRecord, context: ValidationContext): boolean {
+    validate(context: RecordValidationContext): boolean {
 
-        const data = record.getData();
+        const data = this.getData(context);
 
         var valid = this.validateFcn.call(this, data);
 
         if (!valid) {
 
-            this.emitMessage(context, { });
+            this.emitErrors(context, { });
         }
 
         return valid;
     }
-
-    
+   
 }

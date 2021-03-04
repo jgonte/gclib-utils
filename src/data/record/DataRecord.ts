@@ -3,10 +3,9 @@ import DataField from "./DataField";
 import DataRecordDescriptor from "./DataRecordDescriptor";
 import { DataFieldDescriptor, DataProvider, DataSetter, IdentifierInfo } from "./Interfaces";
 import areEqual from "../../utils/areEqual";
-import { ValidationContext } from "../validation/Interfaces";
 
 /**
- * Keeps information about a sigle set of fields
+ * The collection of data fields
  */
 export default class DataRecord implements DataProvider, DataSetter, Subscriber {
 
@@ -30,20 +29,27 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
 
         this._recordDescriptor = recordDescriptor ?? new DataRecordDescriptor();
 
-        this._recordDescriptor.fieldDescriptors.forEach(fd =>this._fields[fd.name] = new DataField(fd, this));
+        this._recordDescriptor.fieldDescriptors.forEach(fd => this._fields[fd.name] = new DataField(fd, this));
     }
 
-    addField(fd: DataFieldDescriptor) {
+    addField(fd: DataFieldDescriptor): DataField {
 
         this._recordDescriptor.addFieldDescriptor(fd);
-        
+
         this._fields[fd.name] = new DataField(fd, this);
+
+        return this._fields[fd.name];
+    }
+
+    getField(name: string) {
+
+        return this._fields[name];
     }
 
     removeField(fd: DataFieldDescriptor) {
 
         this._recordDescriptor.removeFieldDescriptor(fd);
-        
+
         delete this._fields[fd.name];
     }
 
@@ -79,11 +85,6 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
         this._data = undefined;
 
         this._modifiedFields = {};
-    }
-
-    getField(name: string) {
-
-        return this._fields[name];
     }
 
     getData(): any {
@@ -205,52 +206,15 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
         this._data = undefined;
     }
 
-    commit(callback: (record: any) => void) {
+    // commit(callback: (record: any) => void) {
 
-        if (!this.isModified) {
+    //     if (!this.isModified) {
 
-            return;
-        }
+    //         return;
+    //     }
 
-        callback(this._data);
+    //     callback(this._data);
 
-        this.initialize(this._data);
-    }
-
-    validate(context: ValidationContext): boolean {
-
-        const {
-            _fields,
-            _recordDescriptor
-        } = this;
-
-        let valid = true;
-
-        // Validate the fields
-        Object.values(_fields).forEach(f => {
-
-            const r = f.validate(context);
-
-            if (r === false && valid === true) {
-
-                valid = false;
-            }
-        });
-
-        const {
-            recordValidators
-        } = _recordDescriptor;
-
-        recordValidators?.forEach(v => {
-
-            const r = v.validate(this, context);
-
-            if (r === false && valid === true) {
-
-                valid = false;
-            }
-        });
-
-        return valid;
-    }
+    //     this.initialize(this._data);
+    // }
 }

@@ -1,11 +1,85 @@
 import DataRecord from '../../../src/data/record/DataRecord';
 import DataRecordDescriptor from '../../../src/data/record/DataRecordDescriptor';
-import { ValidationFailedHandler } from '../../../src/data/validation/Interfaces';
-import RequiredValidator from '../../../src/data/validation/validators/field/RequiredValidator';
-import CompareValidator from '../../../src/data/validation/validators/record/CompareValidator';
-import { ComparisonOperators } from '../../../src/utils/operators/ComparisonOperators';
 
 describe("DataRecord tests", () => {
+
+    // it("should support the operations of a DataRecord with commit", () => {
+
+    //     const recordDescriptor = new DataRecordDescriptor();
+
+    //     recordDescriptor.fromModel({
+    //         field1: {
+    //             isId: true,
+    //             type: String,
+    //             value: 'field1'
+    //         },
+    //         field2: {
+    //             type: Number,
+    //             value: 3
+    //         },
+    //         field3: {
+    //             type: Date,
+    //             value: new Date(2002, 4, 25)
+    //         },
+    //         field4: {
+    //             type: Boolean,
+    //             value: true
+    //         }
+    //     });
+
+    //     const dataRecord = new DataRecord(recordDescriptor);
+
+    //     expect(dataRecord.getData()).toEqual({
+    //         field1: "field1",
+    //         field2: 3,
+    //         field3: new Date(2002, 4, 25),
+    //         field4: true
+    //     });
+
+    //     expect(dataRecord.isModified).toEqual(false);
+
+    //     dataRecord.setData({
+    //         field1: "field11",
+    //         field2: 32,
+    //         field3: new Date(1928, 4, 24),
+    //         field4: false
+    //     });
+
+    //     expect(dataRecord.isModified).toEqual(true);
+
+    //     // Verify it returns the changed data
+    //     expect(dataRecord.getData()).toEqual({
+    //         field1: "field11",
+    //         field2: 32,
+    //         field3: new Date(1928, 4, 24),
+    //         field4: false
+    //     });
+
+    //     let record = undefined;
+
+    //     dataRecord.commit(r => {
+
+    //         record = r;
+    //     });
+
+    //     expect(record).toEqual({
+    //         field1: "field11",
+    //         field2: 32,
+    //         field3: new Date(1928, 4, 24),
+    //         field4: false
+    //     });
+
+    //     // Verify the record is not modified when commit
+    //     expect(dataRecord.isModified).toEqual(false);
+
+    //     // Verify it returns the initial data
+    //     expect(dataRecord.getData()).toEqual({
+    //         field1: "field11",
+    //         field2: 32,
+    //         field3: new Date(1928, 4, 24),
+    //         field4: false
+    //     });
+    // });
 
     it("should support the operations of a DataRecord with reset", () => {
 
@@ -15,137 +89,19 @@ describe("DataRecord tests", () => {
             field1: {
                 isId: true,
                 type: String,
-                value: 'field1',
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: 'field1'
             },
             field2: {
                 type: Number,
-                value: 3,
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: 3
             },
             field3: {
                 type: Date,
-                value: new Date(2002, 4, 25),
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: new Date(2002, 4, 25)
             },
             field4: {
                 type: Boolean,
-                value: true,
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
-            }
-        });
-
-        const dataRecord = new DataRecord(recordDescriptor);
-
-        expect(dataRecord.getData()).toEqual({
-            field1: "field1",
-            field2: 3,
-            field3: new Date(2002, 4, 25),
-            field4: true
-        });
-
-        expect(dataRecord.isModified).toEqual(false);
-
-        dataRecord.setData({
-            field1: "field11",
-            field2: 32,
-            field3: new Date(1928, 4, 24),
-            field4: false
-        });
-
-        expect(dataRecord.isModified).toEqual(true);
-
-        // Verify it returns the changed data
-        expect(dataRecord.getData()).toEqual({
-            field1: "field11",
-            field2: 32,
-            field3: new Date(1928, 4, 24),
-            field4: false
-        });
-
-        let record = undefined;
-
-        dataRecord.commit(r => {
-
-            record = r;
-        });
-
-        expect(record).toEqual({
-            field1: "field11",
-            field2: 32,
-            field3: new Date(1928, 4, 24),
-            field4: false
-        });
-
-        // Verify the record is not modified when commit
-        expect(dataRecord.isModified).toEqual(false);
-
-        // Verify it returns the initial data
-        expect(dataRecord.getData()).toEqual({
-            field1: "field11",
-            field2: 32,
-            field3: new Date(1928, 4, 24),
-            field4: false
-        });
-    });
-
-    it("should support the operations of a DataRecord with commit", () => {
-
-        const recordDescriptor = new DataRecordDescriptor();
-
-        recordDescriptor.fromModel({
-            field1: {
-                isId: true,
-                type: String,
-                value: 'field1',
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
-            },
-            field2: {
-                type: Number,
-                value: 3,
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
-            },
-            field3: {
-                type: Date,
-                value: new Date(2002, 4, 25),
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
-            },
-            field4: {
-                type: Boolean,
-                value: true,
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: true
             }
         });
 
@@ -215,39 +171,19 @@ describe("DataRecord tests", () => {
             field1: {
                 isId: true,
                 type: String,
-                value: 'field1',
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: 'field1'
             },
             field2: {
                 type: Number,
-                value: 3,
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: 3
             },
             field3: {
                 type: Date,
-                value: new Date(2002, 4, 25),
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: new Date(2002, 4, 25)
             },
             field4: {
                 type: Boolean,
-                value: true,
-                validators: [
-                    {
-                        type: 'required'
-                    }
-                ]
+                value: true
             }
         });
 
@@ -271,97 +207,70 @@ describe("DataRecord tests", () => {
 
     });
 
-    it("should validate the record", () => {
+    // it("should validate the record", () => {
 
-        const recordDescriptor = new DataRecordDescriptor();
+    //     const recordDescriptor = new DataRecordDescriptor();
 
-        let validationError;
+    //     let validationError;
 
-        const validationFailedHandler: ValidationFailedHandler = {
+    //     const validationFailedHandler: ValidationFailedHandler = {
 
-            onValidationFailed(error) {
+    //         onValidationFailed(error) {
 
-                validationError = error;
-            }
-        };
+    //             validationError = error;
+    //         }
+    //     };
 
-        recordDescriptor.fromModel({
-            field1: {
-                isId: true,
-                type: String,
-                //value: 'field1',
-                validators: [
-                    new RequiredValidator({
-                        message: 'Field1 is required',
-                        //allowEmpty: false Default
-                    })
-                ],
-                validationFailedHandler: validationFailedHandler
-            },
-            field2: {
-                type: Number,
-                value: 3,
-                // validators: [
-                //     {
-                //         type: 'required'
-                //     }
-                // ]
-            },
-            field3: {
-                type: Date,
-                value: new Date(2002, 4, 25),
-                // validators: [
-                //     {
-                //         type: 'required'
-                //     }
-                // ]
-            },
-            field4: {
-                type: Boolean,
-                value: true,
-                // validators: [
-                //     {
-                //         type: 'required'
-                //     }
-                // ]
-            },
-            field5: {
-                type: Number,
-                value: 4,
-                // validators: [
-                //     {
-                //         type: 'required'
-                //     }
-                // ]
-            }
-        },
-            new CompareValidator({
-                message: 'Field2 and Field4 must have equal values',
-                propertyToValidate: 'field2',
-                propertyToCompare: 'field5',
-                operator: ComparisonOperators.Equal
-            })
-        );
+    //     recordDescriptor.fromModel({
+    //         field1: {
+    //             isId: true,
+    //             type: String,
+    //             //value: 'field1'
+    //         },
+    //         field2: {
+    //             type: Number,
+    //             value: 3
+    //         },
+    //         field3: {
+    //             type: Date,
+    //             value: new Date(2002, 4, 25)
+    //         },
+    //         field4: {
+    //             type: Boolean,
+    //             value: true
+    //         },
+    //         field5: {
+    //             type: Number,
+    //             value: 4
+    //         }
+    //     },
+    //         new CompareValidator({
+    //             message: 'Field2 and Field4 must have equal values',
+    //             propertyToValidate: 'field2',
+    //             propertyToCompare: 'field5',
+    //             operator: ComparisonOperators.Equal
+    //         })
+    //     );
 
-        const dataRecord = new DataRecord(recordDescriptor);
+    //     const dataRecord = new DataRecord(recordDescriptor);
 
-        dataRecord.initialize({
-            field1: ''
-        });
+    //     dataRecord.initialize({
+    //         field1: ''
+    //     });
 
-        const validationContext = {
-            errors: [],
-            stopWhenInvalid: true
-        };
+    //     const validationContext = {
+    //         errors: [],
+    //         stopWhenInvalid: true
+    //     };
 
-        expect(dataRecord.validate(validationContext)).toEqual(false);
+    //     expect(dataRecord.validate(validationContext)).toEqual(false);
 
-        expect(validationContext.errors.length).toEqual(2);
+    //     expect(validationContext.errors.length).toEqual(2);
 
-        expect(validationContext.errors[0]).toEqual('Field1 is required');
+    //     expect(validationContext.errors[0]).toEqual('Field1 is required');
 
-        expect(validationError).toEqual('Field1 is required');
+    //     expect(validationError).toEqual('Field1 is required');
 
-        expect(validationContext.errors[1]).toEqual('Field2 and Field4 must have equal values');
-    });
+    //     expect(validationContext.errors[1]).toEqual('Field2 and Field4 must have equal values');
+    // });
 });

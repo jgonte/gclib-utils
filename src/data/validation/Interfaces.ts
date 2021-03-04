@@ -4,19 +4,17 @@ export interface ValidatorConfig {
     type: string;
 }
 
-/**
- * Handle of a failed validation
- */
-export interface ValidationFailedHandler {
-
-    onValidationFailed(error: string): void;
-}
-
 export interface ValidationContext {
 
     /** The error messages */
     errors: string[];
 
-    /** Whether to stop validating if the last validation failed */
-    stopWhenInvalid: boolean;
+    /** The warning messages */
+    warnings: string[];
+}
+
+export interface FieldValidationContext extends ValidationContext {
+
+    /** The label of the field */
+    label: string;
 }

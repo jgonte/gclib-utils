@@ -1,14 +1,12 @@
-import { IDataField } from "../../../record/Interfaces";
-import { ValidationContext } from "../../Interfaces";
 import { ValidatorOptions } from "../Validator";
-import FieldValidator from "./FieldValidator";
+import SingleValueFieldValidator, { SingleValueFieldValidationContext } from "./SingleValueFieldValidator";
 
 export interface RegexValidatorOptions extends ValidatorOptions {
 
     regex: RegExp;
 }
 
-export default class RegexValidator extends FieldValidator {
+export default abstract class RegexValidator extends SingleValueFieldValidator {
 
     _regex: RegExp;
 
@@ -19,18 +17,24 @@ export default class RegexValidator extends FieldValidator {
         this._regex = options.regex!;
     }
 
-    validate(field: IDataField, context: ValidationContext): boolean {
+    validate(context: SingleValueFieldValidationContext): boolean {
 
         const {
-            name,
+            label,
             value
-        } = field;
+        } = context;
+
+        // Assume valid if the valid is undefined
+        if (value === undefined)
+        {
+            return true;
+        }
 
         var valid = this._regex.test(value);
 
         if (!valid) {
 
-            this.emitMessage(context, { name });
+            this.emitErrors(context, { label });
         }
 
         return valid;

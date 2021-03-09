@@ -145,13 +145,28 @@ export default class Fetcher implements FetchCallbacks {
         return headers;
     }
 
-    buildBody(request: FetchRequest) {
+    buildBody(request: FetchRequest) : FormData | undefined {
 
         const {
             data
         } = request;
 
-        return data !== undefined ? JSON.stringify(data) : undefined;
+        if (data === undefined) {
+
+            return undefined;
+        }
+
+        const formData = new FormData();
+
+        for (const key in data) {
+
+            if (data.hasOwnProperty(key)) {
+
+                formData.append(key, data[key]); 
+            }
+        }
+
+        return formData;
     }
 
     async processResponse(response: Response) {

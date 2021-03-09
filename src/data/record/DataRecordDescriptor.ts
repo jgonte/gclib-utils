@@ -88,6 +88,12 @@ export default class DataRecordDescriptor {
 
     addFieldDescriptor(fd: DataFieldDescriptor): void {
 
+        // Set the default converter if none are provided
+        if (fd.converter === undefined) {
+
+            fd.converter = defaultValueConverter;
+        }
+
         this._fieldDescriptors.push(fd);
     }
 

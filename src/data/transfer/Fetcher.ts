@@ -33,7 +33,7 @@ export default class Fetcher implements FetchCallbacks {
             this.onData = onData.bind(this);
         }
     }
-    
+
     async fetch(request: FetchRequest) {
 
         const {
@@ -102,17 +102,17 @@ export default class Fetcher implements FetchCallbacks {
         let contentTypeHeader;
 
         for (const key in requestHeaders) {
-            
-            if (key.toLowerCase() === 'content-type')
-            {
+
+            if (key.toLowerCase() === 'content-type') {
                 contentTypeHeader = requestHeaders[key];
             }
         }
 
-        if (contentTypeHeader === undefined) {
+        // Bad practice if using form data since the browser figures out what is the content according to the values of the inputs
+        // if (contentTypeHeader === undefined) {
 
-            requestHeaders['content-type'] = 'application/json';
-        }
+        //     requestHeaders['content-type'] = 'application/json';
+        // }
 
         const headers = new Headers();
 
@@ -124,7 +124,7 @@ export default class Fetcher implements FetchCallbacks {
                 headers.append(key, requestHeaders[key]);
             }
         }
- 
+
         // Add the authorization header
         if (request.authProvider) {
 
@@ -145,7 +145,7 @@ export default class Fetcher implements FetchCallbacks {
         return headers;
     }
 
-    buildBody(request: FetchRequest) : FormData | undefined {
+    buildBody(request: FetchRequest): FormData | undefined {
 
         const {
             data
@@ -162,7 +162,34 @@ export default class Fetcher implements FetchCallbacks {
 
             if (data.hasOwnProperty(key)) {
 
-                formData.append(key, data[key]); 
+                const value = data[key];
+
+                if (typeof value === 'object') {
+
+                    if (value.hasOwnProperty('fileName')) { // Follow conventions to append a file
+
+                        const {
+                            fileName,
+                            contentType,
+                            content
+                        } = value;
+
+                        const file = new File([...content], fileName, {
+                            type: contentType
+                        });
+
+                        formData.append(key, file);
+                    }
+                    else {
+
+                        throw Error(`Invalid form value: ${JSON.stringify(value)}`);
+                    }
+                }
+                else {
+
+                    formData.append(key, value);
+                }
+
             }
         }
 

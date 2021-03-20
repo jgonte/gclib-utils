@@ -105,7 +105,12 @@ export default class DataRecord implements DataProvider, DataSetter, Subscriber 
 
             if (_fields.hasOwnProperty(key)) {
 
-                data[key] = _fields[key].value;
+                const value = _fields[key].value;
+
+                if (value != undefined && value != null) {
+
+                    data[key] = value;
+                }            
             }
         }
 

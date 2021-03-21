@@ -19,6 +19,7 @@ import Fetcher from './data/transfer/Fetcher';
 import SingleItemLoader from './data/transfer/loaders/SingleItemLoader';
 import CollectionLoader from './data/transfer/loaders/CollectionLoader';
 import formatDate from './utils/formatDate';
+import AsyncTask from './asyncTask/AsyncTask';
 
 export {
     Observer,
@@ -41,5 +42,6 @@ export {
     Fetcher,
     SingleItemLoader,
     CollectionLoader,
-    formatDate
+    formatDate,
+    AsyncTask
 }

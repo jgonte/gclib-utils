@@ -166,16 +166,17 @@ export default class Fetcher implements FetchCallbacks {
 
                 if (typeof value === 'object') {
 
-                    if (value.hasOwnProperty('fileName')) { // Follow conventions to append a file
+                    if (value.hasOwnProperty('name')) { // Follow conventions to append a file
 
                         const {
-                            fileName,
-                            contentType,
-                            content
+                            name,
+                            type,
+                            content,
+                            // size Not used in the File constructor
                         } = value;
 
-                        const file = new File([...content], fileName, {
-                            type: contentType
+                        const file = new File([...content], name, {
+                            type
                         });
 
                         formData.append(key, file);

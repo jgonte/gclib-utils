@@ -20,6 +20,7 @@ import SingleItemLoader from './data/transfer/loaders/SingleItemLoader';
 import CollectionLoader from './data/transfer/loaders/CollectionLoader';
 import formatDate from './utils/formatDate';
 import AsyncTask from './asyncTask/AsyncTask';
+import { resourceLoader } from './utils/resourceLoader';
 
 export {
     Observer,
@@ -43,5 +44,6 @@ export {
     SingleItemLoader,
     CollectionLoader,
     formatDate,
-    AsyncTask
+    AsyncTask,
+    resourceLoader
 }

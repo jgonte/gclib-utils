@@ -21,7 +21,7 @@ import CollectionLoader from './data/transfer/loaders/CollectionLoader';
 import formatDate from './utils/formatDate';
 import AsyncTask from './asyncTask/AsyncTask';
 import { resourceLoader } from './utils/resourceLoader';
-import Router from './router/Router';
+import Router, { Route } from './router/Router';
 
 export {
     Observer,
@@ -47,5 +47,6 @@ export {
     formatDate,
     AsyncTask,
     resourceLoader,
+    Route,
     Router
 }

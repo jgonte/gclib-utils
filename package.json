@@ -1,6 +1,6 @@
 {
   "name": "gclib-utils",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "description": "General utilities javascript library",
   "keywords": [],
   "main": "dist/gclib-utils.umd.js",

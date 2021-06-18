@@ -22,6 +22,7 @@ import formatDate from './utils/formatDate';
 import AsyncTask from './asyncTask/AsyncTask';
 import { resourceLoader } from './utils/resourceLoader';
 import Router, { Route } from './router/Router';
+import OidcProvider from './auth/OidcProvider';
 
 export {
     Observer,
@@ -48,5 +49,6 @@ export {
     AsyncTask,
     resourceLoader,
     Route,
-    Router
+    Router,
+    OidcProvider
 }

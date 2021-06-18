@@ -126,11 +126,11 @@ export default class Fetcher implements FetchCallbacks {
         }
 
         // Add the authorization header
-        if (request.authProvider) {
+        if (request.authProvider !== undefined) {
 
             const authHeader = await request.authProvider.authorize();
 
-            if (authHeader) {
+            if (authHeader != undefined) {
 
                 for (const key in authHeader) {
 

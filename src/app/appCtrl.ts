@@ -1,5 +1,6 @@
 // import AuthProvider from '../auth/AuthProvider';
 // import AppUser from '../auth/AppUser';
+import { AuthProvider } from '../auth/Interfaces';
 import IntlProvider from '../intl/IntlProvider';
 
 /**
@@ -9,7 +10,7 @@ class AppCtrl {
   /**
    * The auth provider of the application
    */
-  //authProvider?: AuthProvider;
+  authProvider?: AuthProvider;
 
   /**
    * The error handler of the application

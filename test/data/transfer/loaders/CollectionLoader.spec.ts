@@ -75,7 +75,7 @@ describe("CollectionLoader test", () => {
 
 		headers.append('Header1', 'abc');
 
-		headers.append('content-type', 'application/json');
+		//headers.append('content-type', 'application/json');
 
 		headers.append('Authorization', 'Bearer eyJhGci0i');
 
@@ -84,7 +84,8 @@ describe("CollectionLoader test", () => {
 			headers,
 			method: 'GET',
 			mode: 'cors',
-			credentials: 'include'
+			credentials: 'include',
+			body: undefined
 		});
 
 	});
@@ -172,7 +173,7 @@ describe("CollectionLoader test", () => {
 
 		headers.append('Header1', 'abc');
 
-		headers.append('content-type', 'application/json');
+		//headers.append('content-type', 'application/json');
 
 		headers.append('Authorization', 'Bearer eyJhGci0i');
 
@@ -182,7 +183,8 @@ describe("CollectionLoader test", () => {
 				headers,
 				method: 'GET',
 				mode: 'cors',
-				credentials: 'include'
+				credentials: 'include',
+				body: undefined
 			});
 
 	});

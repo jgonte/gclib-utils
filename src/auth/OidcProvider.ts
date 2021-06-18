@@ -1,5 +1,5 @@
-import { UserManager } from "oidc-client";
-import { AuthProvider } from "./Interfaces";
+import { UserManager } from 'oidc-client';
+import { AuthProvider } from './Interfaces';
 
 export default class OidcProvider implements AuthProvider {
 

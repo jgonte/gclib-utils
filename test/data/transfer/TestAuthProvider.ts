@@ -19,9 +19,4 @@ export default class TestAuthProvider implements AuthProvider {
             });
         });
     }
-
-    onNotLoggedIn() {
-        // Do nothing
-    }
-
 }

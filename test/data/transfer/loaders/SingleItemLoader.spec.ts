@@ -56,7 +56,7 @@ describe("SingleItemLoader test", () => {
 
 		headers.append('Header1', 'abc');
 
-		headers.append('content-type', 'application/json');
+		//headers.append('content-type', 'application/json');
 
 		headers.append('Authorization', 'Bearer eyJhGci0i');
 
@@ -65,7 +65,8 @@ describe("SingleItemLoader test", () => {
 			headers,
 			method: 'GET',
 			mode: 'cors',
-			credentials: 'include'
+			credentials: 'include',
+			body: undefined
 		});
 
 	});
@@ -119,7 +120,8 @@ describe("SingleItemLoader test", () => {
 			headers,
 			method: 'GET',
 			mode: 'cors',
-			credentials: 'include'
+			credentials: 'include',
+			body: undefined
 		});
 
 	});
@@ -168,7 +170,7 @@ describe("SingleItemLoader test", () => {
 
 		headers.append('Header1', 'abc');
 
-		headers.append('content-type', 'application/json');
+		//headers.append('content-type', 'application/json'); Not set by default
 
 		headers.append('Authorization', 'Bearer eyJhGci0i');
 
@@ -177,7 +179,8 @@ describe("SingleItemLoader test", () => {
 			headers,
 			method: 'GET',
 			mode: 'cors',
-			credentials: 'include'
+			credentials: 'include',
+			body: undefined
 		});
 
 	});

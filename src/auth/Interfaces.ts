@@ -8,9 +8,19 @@ export interface AuthProvider {
     login: () => void;
 
     /**
+     * The function called when the provider did the login
+     */
+    onLogin: (success?: Function) => void;
+
+    /**
      * The function that does the logout
      */
     logout: () => void;
+
+    /**
+     * Retrieves the user data
+     */
+    getUser: () => Promise<any | null>;
 
     /**
      * The function that sets up the authorization header

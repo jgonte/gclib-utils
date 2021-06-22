@@ -15,9 +15,31 @@ export default class OidcProvider implements AuthProvider {
         this._userManager.signinRedirect();
     }
 
+    onLogin(success?: Function): void {
+
+        if (success == undefined) {
+
+            success = () => (window as any).location = "/";
+        }
+
+        this._userManager.signinRedirectCallback().then(user => {
+
+            success!();
+
+        }).catch(function (e) {
+
+            console.error(e);
+        });
+    }
+
     logout(): void {
 
         this._userManager.signoutRedirect();
+    }
+
+    async getUser(): Promise<any | null> {
+
+        return await this._userManager.getUser();
     }
 
     async authorize(): Promise<Record<string, string> | undefined> {

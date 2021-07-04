@@ -18,15 +18,16 @@ import CustomRecordValidator from './data/validation/validators/record/CustomRec
 import Fetcher from './data/transfer/Fetcher';
 import SingleRecordLoader from './data/transfer/loaders/SingleRecordLoader';
 import CollectionLoader from './data/transfer/loaders/CollectionLoader';
+import ComparisonOperators from './utils/operators/ComparisonOperators';
+import LogicalOperators from './utils/operators/LogicalOperators';
+import MultiValueOperators from './utils/operators/MultiValueOperators';
+import StringFunctions from './utils/operators/StringFunctions';
+import createFilter from './data/transfer/helpers/createFilter';
 import formatDate from './utils/formatDate';
 import AsyncTask from './asyncTask/AsyncTask';
 import { resourceLoader } from './utils/resourceLoader';
 import Router, { Route } from './router/Router';
 import OidcProvider from './auth/OidcProvider';
-import ComparisonOperators from './utils/operators/ComparisonOperators';
-import LogicalOperators from './utils/operators/LogicalOperators';
-import MultiValueOperators from './utils/operators/MultiValueOperators';
-import StringFunctions from './utils/operators/StringFunctions';
 
 export {
     Observer,
@@ -53,6 +54,7 @@ export {
     LogicalOperators,
     MultiValueOperators,
     StringFunctions,
+    createFilter,
     formatDate,
     AsyncTask,
     resourceLoader,

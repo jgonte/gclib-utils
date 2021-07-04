@@ -2,7 +2,9 @@ import { IsEqualFilter, IsGreaterThanFilter } from '../../../../src/data/transfe
 import { AndFilter } from '../../../../src/data/transfer/filters/LogicalFilter';
 import { NotFilter } from '../../../../src/data/transfer/filters/NotFilter';
 
-describe("AndFilter test", () => {
+import createFilter from '../../../../src/data/transfer/helpers/createFilter';
+
+describe("NotFilter test", () => {
 
     it("builds a filter string for different filters", async () => {
 
@@ -12,6 +14,31 @@ describe("AndFilter test", () => {
                 new IsGreaterThanFilter('field2', 'some text')
             ])
         );
+
+        expect(filter.build()).toEqual("not field1 eq 123 and field2 gt 'some text'");
+    });
+
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            operator: 'not',
+            filter:
+            {
+                operator: 'and',
+                filters: [
+                    {
+                        field: 'field1',
+                        operator: 'eq',
+                        value: 123
+                    },
+                    {
+                        field: 'field2',
+                        operator: 'gt',
+                        value: 'some text'
+                    }
+                ]
+            }
+        });
 
         expect(filter.build()).toEqual("not field1 eq 123 and field2 gt 'some text'");
     });

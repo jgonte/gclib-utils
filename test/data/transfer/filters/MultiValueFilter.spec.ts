@@ -3,6 +3,8 @@ import {
     NotInFilter
 } from '../../../../src/data/transfer/filters/MultiValueFilter';
 
+import createFilter from '../../../../src/data/transfer/helpers/createFilter';
+
 describe("InFilter test", () => {
 
     it("builds a filter string for a numeric values", async () => {
@@ -12,6 +14,16 @@ describe("InFilter test", () => {
         expect(filter.build()).toEqual("field1 in (123, 'some text')");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'in',
+            values: [123, 'some text']
+        });
+        
+        expect(filter.build()).toEqual("field1 in (123, 'some text')");
+    });
 });
 
 describe("NotInFilter test", () => {
@@ -23,4 +35,14 @@ describe("NotInFilter test", () => {
         expect(filter.build()).toEqual("field1 not in (123, 'some text')");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'not in',
+            values: [123, 'some text']
+        });
+        
+        expect(filter.build()).toEqual("field1 not in (123, 'some text')");
+    });
 });

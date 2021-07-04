@@ -7,6 +7,8 @@ import {
     IsLessOrEqualFilter
 } from '../../../../src/data/transfer/filters/ComparisonFilter';
 
+import createFilter from '../../../../src/data/transfer/helpers/createFilter';
+
 describe("IsEqualFilter test", () => {
 
     it("builds a filter string for a numeric value", async () => {
@@ -23,6 +25,16 @@ describe("IsEqualFilter test", () => {
         expect(filter.build()).toEqual("field1 eq 'some text'");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'eq',
+            value: 'some text'
+        });
+        
+        expect(filter.build()).toEqual("field1 eq 'some text'");
+    });
 });
 
 describe("IsNotEqualFilter test", () => {
@@ -41,6 +53,16 @@ describe("IsNotEqualFilter test", () => {
         expect(filter.build()).toEqual("field1 ne 'some text'");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'ne',
+            value: 'some text'
+        });
+        
+        expect(filter.build()).toEqual("field1 ne 'some text'");
+    }); 
 });
 
 describe("IsGreaterThanFilter test", () => {
@@ -59,6 +81,16 @@ describe("IsGreaterThanFilter test", () => {
         expect(filter.build()).toEqual("field1 gt 'some text'");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'gt',
+            value: 'some text'
+        });
+        
+        expect(filter.build()).toEqual("field1 gt 'some text'");
+    }); 
 });
 
 describe("IsGreaterOrEqualFilter test", () => {
@@ -77,6 +109,16 @@ describe("IsGreaterOrEqualFilter test", () => {
         expect(filter.build()).toEqual("field1 ge 'some text'");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'ge',
+            value: 'some text'
+        });
+        
+        expect(filter.build()).toEqual("field1 ge 'some text'");
+    });
 });
 
 describe("IsLessThanFilter test", () => {
@@ -95,6 +137,16 @@ describe("IsLessThanFilter test", () => {
         expect(filter.build()).toEqual("field1 lt 'some text'");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'lt',
+            value: 'some text'
+        });
+        
+        expect(filter.build()).toEqual("field1 lt 'some text'");
+    });
 });
 
 describe("IsLessOrEqualFilter test", () => {
@@ -113,4 +165,14 @@ describe("IsLessOrEqualFilter test", () => {
         expect(filter.build()).toEqual("field1 le 'some text'");
     }); 
 
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            field: 'field1',
+            operator: 'le',
+            value: 'some text'
+        });
+        
+        expect(filter.build()).toEqual("field1 le 'some text'");
+    });
 });

@@ -9,6 +9,8 @@ import {
     OrFilter
 } from '../../../../src/data/transfer/filters/LogicalFilter';
 
+import createFilter from '../../../../src/data/transfer/helpers/createFilter';
+
 describe("AndFilter test", () => {
 
     it("builds a filter string for different filters", async () => {
@@ -20,6 +22,27 @@ describe("AndFilter test", () => {
 
         expect(filter.build()).toEqual("field1 eq 123 and field2 gt 'some text'");
     });  
+
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            operator: 'and',
+            filters: [
+                {
+                    field: 'field1',
+                    operator: 'eq',
+                    value: 123
+                },
+                {
+                    field: 'field2',
+                    operator: 'gt',
+                    value: 'some text'
+                }
+            ]
+        });
+        
+        expect(filter.build()).toEqual("field1 eq 123 and field2 gt 'some text'");
+    });
 
 });
 
@@ -33,6 +56,27 @@ describe("OrFilter test", () => {
         ]);
 
         expect(filter.build()).toEqual("field1 eq 123 or field2 lt 'some text'");
-    });  
+    }); 
+    
+    it("builds a filter using the createFilter helper", async () => {
+
+        const filter = createFilter({
+            operator: 'or',
+            filters: [
+                {
+                    field: 'field1',
+                    operator: 'eq',
+                    value: 123
+                },
+                {
+                    field: 'field2',
+                    operator: 'gt',
+                    value: 'some text'
+                }
+            ]
+        });
+        
+        expect(filter.build()).toEqual("field1 eq 123 or field2 gt 'some text'");
+    });
 
 });

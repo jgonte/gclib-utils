@@ -1,4 +1,7 @@
-import { ComparisonOperators, LogicalOperators, MultiValueOperators, StringFunctions } from "../../../gclib-utils";
+import ComparisonOperators from '../../../utils/operators/ComparisonOperators';
+import LogicalOperators from '../../../utils/operators/LogicalOperators'; 
+import MultiValueOperators from '../../../utils/operators/MultiValueOperators'; 
+import StringFunctions from '../../../utils/operators/StringFunctions';
 import { IsEqualFilter, IsGreaterOrEqualFilter, IsGreaterThanFilter, IsLessOrEqualFilter, IsLessThanFilter, IsNotEqualFilter } from "../filters/ComparisonFilter";
 import { AndFilter, OrFilter } from "../filters/LogicalFilter";
 import { InFilter, NotInFilter } from "../filters/MultiValueFilter";

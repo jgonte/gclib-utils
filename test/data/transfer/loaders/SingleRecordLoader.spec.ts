@@ -1,6 +1,6 @@
 import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
 import TestAuthProvider from '../TestAuthProvider';
-import SingleItemLoader from '../../../../src/data/transfer/loaders/SingleItemLoader';
+import SingleRecordLoader from '../../../../src/data/transfer/loaders/SingleRecordLoader';
 import { ErrorResponse } from '../../../../src/data/transfer/Interfaces';
 
 enableFetchMocks();
@@ -13,9 +13,9 @@ beforeEach(() => {
 const authProvider = new TestAuthProvider();
 
 /**
- * SingleItemLoader test
+ * SingleRecordLoader test
  */
-describe("SingleItemLoader test", () => {
+describe("SingleRecordLoader test", () => {
 
 	it("loads a single item as JSON", async () => {
 
@@ -42,11 +42,11 @@ describe("SingleItemLoader test", () => {
 
 		let data: any;
 
-		const singleItemLoader = new SingleItemLoader({
+		const singleRecordLoader = new SingleRecordLoader({
 			onData: (d: any) => data = d.payload
 		});
 
-		await singleItemLoader.load(request);
+		await singleRecordLoader.load(request);
 
 		expect(data.id).toEqual(1);
 
@@ -97,11 +97,11 @@ describe("SingleItemLoader test", () => {
 
 		let data: any;
 
-		const singleItemLoader = new SingleItemLoader({
+		const singleRecordLoader = new SingleRecordLoader({
 			onData: (d: any) => data = d.payload
 		});
 
-		await singleItemLoader.load(request);
+		await singleRecordLoader.load(request);
 
 		expect(data.id).toEqual('1');
 
@@ -156,11 +156,11 @@ describe("SingleItemLoader test", () => {
 			authProvider
 		};
 
-		const singleItemLoader = new SingleItemLoader({
+		const singleRecordLoader = new SingleRecordLoader({
 			onData: (d: any) => data = d.payload
 		});
 
-		await singleItemLoader.load(request);
+		await singleRecordLoader.load(request);
 
 		expect(data.id).toEqual(1);
 
@@ -195,11 +195,11 @@ describe("SingleItemLoader test", () => {
 			url: 'https://someurl.dev'
 		};
 
-		const singleItemLoader = new SingleItemLoader({
+		const singleRecordLoader = new SingleRecordLoader({
 			onError: (err: ErrorResponse) => error = err
 		});
 
-		await singleItemLoader.load(request);
+		await singleRecordLoader.load(request);
 
 		expect(error).toEqual('invalid content type');
 

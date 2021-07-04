@@ -155,9 +155,9 @@ export interface CollectionLoaderConfig extends FetchCallbacks {
 }
 
 /**
- * Configuration passed to the constructor of SingleItemFetchLoader
+ * Configuration passed to the constructor of SingleRecordLoader
  */
-export interface SingleItemLoaderConfig extends FetchCallbacks {
+export interface SingleRecordLoaderConfig extends FetchCallbacks {
 
     urlBuilder?: ISelectUrlBuilder;
 }

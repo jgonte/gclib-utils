@@ -16,7 +16,7 @@ import CustomSingleValueFieldValidator from './data/validation/validators/field/
 import CompareValidator from './data/validation/validators/record/CompareValidator';
 import CustomRecordValidator from './data/validation/validators/record/CustomRecordValidator';
 import Fetcher from './data/transfer/Fetcher';
-import SingleItemLoader from './data/transfer/loaders/SingleItemLoader';
+import SingleRecordLoader from './data/transfer/loaders/SingleRecordLoader';
 import CollectionLoader from './data/transfer/loaders/CollectionLoader';
 import formatDate from './utils/formatDate';
 import AsyncTask from './asyncTask/AsyncTask';
@@ -43,7 +43,7 @@ export {
     CompareValidator,
     CustomRecordValidator,
     Fetcher,
-    SingleItemLoader,
+    SingleRecordLoader,
     CollectionLoader,
     formatDate,
     AsyncTask,

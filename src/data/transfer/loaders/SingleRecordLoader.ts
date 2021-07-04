@@ -1,12 +1,12 @@
 import Fetcher from '../Fetcher';
 import SelectUrlBuilder from '../helpers/SelectUrlBuilder';
-import { SingleItemLoaderConfig as SingleItemLoaderConfig, FetchRequest } from '../Interfaces';
+import { SingleRecordLoaderConfig, FetchRequest } from '../Interfaces';
 
-export default class SingleItemLoader extends Fetcher {
+export default class SingleRecordLoader extends Fetcher {
 
     urlBuilder: SelectUrlBuilder;
 
-    constructor(cfg: SingleItemLoaderConfig) {
+    constructor(cfg: SingleRecordLoaderConfig) {
 
         super(cfg);
 

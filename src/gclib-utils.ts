@@ -23,6 +23,10 @@ import AsyncTask from './asyncTask/AsyncTask';
 import { resourceLoader } from './utils/resourceLoader';
 import Router, { Route } from './router/Router';
 import OidcProvider from './auth/OidcProvider';
+import ComparisonOperators from './utils/operators/ComparisonOperators';
+import LogicalOperators from './utils/operators/LogicalOperators';
+import MultiValueOperators from './utils/operators/MultiValueOperators';
+import StringFunctions from './utils/operators/StringFunctions';
 
 export {
     Observer,
@@ -45,6 +49,10 @@ export {
     Fetcher,
     SingleRecordLoader,
     CollectionLoader,
+    ComparisonOperators,
+    LogicalOperators,
+    MultiValueOperators,
+    StringFunctions,
     formatDate,
     AsyncTask,
     resourceLoader,

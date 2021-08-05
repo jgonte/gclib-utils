@@ -147,27 +147,27 @@ describe("CollectionLoader test", () => {
 			]
 		};
 
-		let data: any;
-
 		const collectionLoader = new CollectionLoader({
-			onData: (d: any) => data = d.payload
+			//onData: (d: any) => data = d.payload
 		});
 
-		await collectionLoader.load(request);
+		const data = await collectionLoader.load(request);
 
-		expect(data.length).toEqual(3);
+		const payload = data.payload;
 
-		expect(data[0].id).toEqual(1);
+		expect(payload.length).toEqual(3);
 
-		expect(data[0].name).toEqual('Sarah');
+		expect(payload[0].id).toEqual(1);
 
-		expect(data[1].id).toEqual(2);
+		expect(payload[0].name).toEqual('Sarah');
 
-		expect(data[1].name).toEqual('Mark');
+		expect(payload[1].id).toEqual(2);
 
-		expect(data[2].id).toEqual(3);
+		expect(payload[1].name).toEqual('Mark');
 
-		expect(data[2].name).toEqual('Yana');
+		expect(payload[2].id).toEqual(3);
+
+		expect(payload[2].name).toEqual('Yana');
 
 		const headers = new Headers();
 

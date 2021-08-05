@@ -1,7 +1,7 @@
 import { DataProvider } from "../../../../../src/data/record/Interfaces";
 import CompareValidator from "../../../../../src/data/validation/validators/record/CompareValidator";
 import { RecordValidationContext } from "../../../../../src/data/validation/validators/record/RecordValidator";
-import { ComparisonOperators } from "../../../../../src/utils/operators/ComparisonOperators";
+import { ComparisonOperatorsEnum } from "../../../../../src/utils/operators/ComparisonOperatorsEnum";
 
 describe("CompareValidator tests", () => {
 
@@ -22,7 +22,7 @@ describe("CompareValidator tests", () => {
             
             propertyToValidate: 'password',
             propertyToCompare: 'verifyPassword',
-            operator: ComparisonOperators.Equal,
+            operator: ComparisonOperatorsEnum.Equal,
             message: 'Password must match'
         });
 
@@ -56,7 +56,7 @@ describe("CompareValidator tests", () => {
             
             propertyToValidate: 'password',
             propertyToCompare: 'verifyPassword',
-            operator: ComparisonOperators.Equal,
+            operator: ComparisonOperatorsEnum.Equal,
             message: 'Password must match'
         });
 

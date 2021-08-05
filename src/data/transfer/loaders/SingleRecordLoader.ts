@@ -13,9 +13,9 @@ export default class SingleRecordLoader extends Fetcher {
         this.urlBuilder = new SelectUrlBuilder(cfg.urlBuilder);
     }
 
-    async load(request: FetchRequest) {
+    async load(request: FetchRequest) : Promise<any> {
         
-        await this.fetch({
+        return await this.fetch({
             ...request,
             url: this.urlBuilder.build(request)    
         });

@@ -56,7 +56,7 @@ export default class Fetcher implements FetchCallbacks {
 
             if (response.status != 204) { // No content
 
-                await this.processResponse(response);
+                return await this.processResponse(response);
             }
         }
         catch (error) {
@@ -217,13 +217,17 @@ export default class Fetcher implements FetchCallbacks {
             return;
         }
 
+        const data = {
+            headers: response.headers,
+            payload: await this.parseContent(response)
+        }
+
         if (this.onData !== undefined) {
 
-            this.onData({
-                headers: response.headers,
-                payload: await this.parseContent(response)
-            });
+            this.onData(data);
         }
+
+        return data;
     }
 
     /**

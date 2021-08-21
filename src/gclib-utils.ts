@@ -28,6 +28,7 @@ import AsyncTask from './asyncTask/AsyncTask';
 import { resourceLoader } from './utils/resourceLoader';
 import Router, { Route } from './router/Router';
 import OidcProvider from './auth/OidcProvider';
+import isPrimitive from './utils/isPrimitive';
 
 export {
     Observer,
@@ -60,5 +61,6 @@ export {
     resourceLoader,
     Route,
     Router,
-    OidcProvider
+    OidcProvider,
+    isPrimitive
 }
